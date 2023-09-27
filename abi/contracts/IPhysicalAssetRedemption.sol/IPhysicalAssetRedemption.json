@@ -1,0 +1,111 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "properties",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "tokenIssuer",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "assetHolder",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "storedLocation",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "terms",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "jurisdiction",
+        "type": "string"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "currency",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Amount",
+        "name": "declaredValue",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "tokenIssuer",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "assetHolder",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "storedLocation",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "terms",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "jurisdiction",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "declaredValueCurrency",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "declaredValueAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setProperties",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

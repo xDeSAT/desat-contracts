@@ -4,6 +4,7 @@ coverage
 coverage.json
 typechain
 .vscode
+.npmrc
 
 #Hardhat files
 cache
