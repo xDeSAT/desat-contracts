@@ -1,5 +1,5 @@
 {
-  "name": "@xdeSAT/physical-asset-redemption-standard",
+  "name": "@xdesat/physical-asset-redemption-standard",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/xDeSat"
   },
