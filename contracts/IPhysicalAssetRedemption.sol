@@ -9,7 +9,7 @@ pragma solidity ^0.8.21;
  * @param storedLocation The physical storage location
  * @param terms  Link to IPFS contract, agreement or terms
  * @param jurisdiction The legal justification set out in the terms
- * @param declaredValue The declared value at time of token miniting
+ * @param declaredValue The declared value at time of token minting
  */
 struct Properties {
     uint256 tokenId;
@@ -35,8 +35,20 @@ struct Amount {
  * @notice Interface for the PhysicalAssetRedemption contract
  */
 interface IPhysicalAssetRedemption {
+
     /**
-     * @notice fuction to get the properties of a token
+     * @notice Emitted when properties are set
+     * @param properties The properties of the token
+     */
+    event PropertiesSet(Properties properties);
+    /**
+     * @notice Emitted when properties are removed
+     * @param properties The properties of the token
+     */
+    event PropertiesRemoved(Properties properties);
+
+    /**
+     * @notice function to get the properties of a token
      * @param tokenId The token id of the minted token
      */
     function properties(
@@ -55,15 +67,15 @@ interface IPhysicalAssetRedemption {
         );
 
     /**
-     * @notice Properties requierd to be set when minting a token
+     * @notice Properties required to be set when minting a token
      * @param id The token id of the minted token
      * @param tokenIssuer The network or entity minting the tokens
      * @param assetHolder The legal owner of the physical asset
      * @param storedLocation The physical storage location
      * @param terms Link to IPFS contract, agreement or terms
      * @param jurisdiction The legal justification set out in the terms
-     * @param declaredValueCurrency The declared value currency at time of token miniting
-     * @param declaredValueAmount The declared value amount at time of token miniting
+     * @param declaredValueCurrency The declared value currency at time of token minting
+     * @param declaredValueAmount The declared value amount at time of token minting
      */
     function setProperties(
         uint256 id,
