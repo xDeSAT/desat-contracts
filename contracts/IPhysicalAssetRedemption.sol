@@ -3,16 +3,14 @@ pragma solidity ^0.8.21;
 
 /**
  * @notice A struct containing data for redemption properties
- * @param tokenId Set when properties are created
  * @param tokenIssuer The network or entity minting the tokens
- * @param legalOwner The legal owner of the physical asset
+ * @param assetHolder The legal owner of the physical asset
  * @param storedLocation The physical storage location
  * @param terms  Link to IPFS contract, agreement or terms
  * @param jurisdiction The legal justification set out in the terms
  * @param declaredValue The declared value at time of token minting
  */
 struct Properties {
-    uint256 tokenId;
     string tokenIssuer;
     string assetHolder;
     string storedLocation;
@@ -51,12 +49,11 @@ interface IPhysicalAssetRedemption {
      * @param tokenId The token id of the minted token
      */
     function properties(
-        uint256 id
+        uint256 tokenId
     )
         external
         view
         returns (
-            uint256 tokenId,
             string memory tokenIssuer,
             string memory assetHolder,
             string memory storedLocation,
@@ -67,7 +64,7 @@ interface IPhysicalAssetRedemption {
 
     /**
      * @notice Properties required to be set when minting a token
-     * @param id The token id of the minted token
+     * @param tokenId The token id of the minted token
      * @param tokenIssuer The network or entity minting the tokens
      * @param assetHolder The legal owner of the physical asset
      * @param storedLocation The physical storage location
@@ -77,7 +74,7 @@ interface IPhysicalAssetRedemption {
      * @param declaredValueAmount The declared value amount at time of token minting
      */
     function setProperties(
-        uint256 id,
+        uint256 tokenId,
         string memory tokenIssuer,
         string memory assetHolder,
         string memory storedLocation,

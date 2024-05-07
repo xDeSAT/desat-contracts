@@ -17,11 +17,11 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
      */
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
 
-    mapping(uint256 => Properties) public properties;
+    mapping(uint256 tokenId => Properties) public properties;
 
     /**
      * @notice Properties required to be set when minting a token
-     * @param id The token id of the initialized token. Should be greater than 0.
+     * @param tokenId The token id of the initialized token. Should be greater than 0.
      * @param tokenIssuer The network or entity minting the tokens
      * @param assetHolder The legal owner of the physical asset
      * @param storedLocation The physical storage location
@@ -31,7 +31,7 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
      * @param declaredValueAmount The declared value amount at time of token minting
      */
     function setProperties(
-        uint256 id,
+        uint256 tokenId,
         string memory tokenIssuer,
         string memory assetHolder,
         string memory storedLocation,
@@ -40,9 +40,8 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
         string memory declaredValueCurrency,
         uint256 declaredValueAmount
     ) public {
-        require(id > 0, "Token id must be greater than 0");
-        properties[id] = Properties({
-            tokenId: id,
+        require(tokenId > 0, "Token id must be greater than 0");
+        properties[tokenId] = Properties({
             tokenIssuer: tokenIssuer,
             assetHolder: assetHolder,
             storedLocation: storedLocation,
@@ -51,34 +50,34 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
             declaredValue: Amount({ currency: declaredValueCurrency, value: declaredValueAmount })
         });
 
-        emit PropertiesSet(properties[id]);
+        emit PropertiesSet(properties[tokenId]);
     }
 
     /**
      * @notice internal function to remove the properties of a token
-     * @param _tokenId The token id of the minted token
+     * @param tokenId The token id of the minted token
      */
-    function _removeProperties(uint256 _tokenId) internal {
-        delete properties[_tokenId];
-        emit PropertiesRemoved(properties[_tokenId]);
+    function _removeProperties(uint256 tokenId) internal {
+        delete properties[tokenId];
+        emit PropertiesRemoved(properties[tokenId]);
     }
 
     /**
      * @notice override of the _safeMint function to check if properties are set
      * @param to The address to mint the token to
-     * @param id The token id of the token to mint
+     * @param tokenId The token id of the token to mint
      */
-    function _safeMint(address to, uint256 id) internal virtual override {
-        require(properties[id].tokenId > 0, "Properties not initialized");
-        super._safeMint(to, id);
+    function _safeMint(address to, uint256 tokenId) internal virtual override {
+        require(bytes(properties[tokenId].tokenIssuer).length != 0, "Properties not initialized");
+        super._safeMint(to, tokenId);
     }
 
     /**
      * @notice override of the _burn function to remove properties
-     * @param id The token id of the minted token
+     * @param tokenId The token id of the minted token
      */
-    function _burn(uint256 id) internal virtual override {
-        _removeProperties(id);
-        super._burn(id);
+    function _burn(uint256 tokenId) internal virtual override {
+        _removeProperties(tokenId);
+        super._burn(tokenId);
     }
 }
