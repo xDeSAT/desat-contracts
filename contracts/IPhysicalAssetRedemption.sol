@@ -45,26 +45,14 @@ interface IPhysicalAssetRedemption {
     event PropertiesRemoved(Properties properties);
 
     /**
-     * @notice function to get the properties of a token
-     * @param tokenId The token id of the minted token
+     * @notice Retrieves all the properties of a token
+     * @param tokenId The token ID of the minted token
      */
-    function properties(
-        uint256 tokenId
-    )
-        external
-        view
-        returns (
-            string memory tokenIssuer,
-            string memory assetHolder,
-            string memory storedLocation,
-            string memory terms,
-            string memory jurisdiction,
-            Amount memory declaredValue
-        );
+    function getProperties(uint256 tokenId) external view returns (Properties memory properties);
 
     /**
      * @notice Properties required to be set when minting a token
-     * @param tokenId The token id of the minted token
+     * @param tokenId The token ID of the minted token
      * @param tokenIssuer The network or entity minting the tokens
      * @param assetHolder The legal owner of the physical asset
      * @param storedLocation The physical storage location
