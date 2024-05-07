@@ -24,7 +24,9 @@
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.7.2",
     "hardhat": "^2.17.3",
-    "hardhat-interface-generator": "^0.0.6"
+    "hardhat-interface-generator": "^0.0.6",
+    "prettier": "^3.2.5",
+    "solhint-community": "^4.0.0"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.3"
