@@ -3,6 +3,10 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/xDeSat"
   },
+  "scripts": {
+    "format-sol": "prettier --write \"contracts/**/*.sol\"",
+    "format-ts": "prettier --write \"{_mock,test,scripts,config}/**/*.ts\""
+  },
   "files": [
     "/contracts/**/*.sol"
   ],
