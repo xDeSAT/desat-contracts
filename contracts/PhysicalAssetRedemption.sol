@@ -15,10 +15,7 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
      * @param _name The name of the token
      * @param _symbol The symbol of the token
      */
-    constructor(
-        string memory _name,
-        string memory _symbol
-    ) ERC721(_name, _symbol) {}
+    constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
 
     mapping(uint256 => Properties) public properties;
 
@@ -51,10 +48,7 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
             storedLocation: storedLocation,
             terms: terms,
             jurisdiction: jurisdiction,
-            declaredValue: Amount({
-                currency: declaredValueCurrency,
-                value: declaredValueAmount
-            })
+            declaredValue: Amount({ currency: declaredValueCurrency, value: declaredValueAmount })
         });
 
         emit PropertiesSet(properties[id]);

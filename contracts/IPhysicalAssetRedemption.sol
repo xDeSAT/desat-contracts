@@ -35,7 +35,6 @@ struct Amount {
  * @notice Interface for the PhysicalAssetRedemption contract
  */
 interface IPhysicalAssetRedemption {
-
     /**
      * @notice Emitted when properties are set
      * @param properties The properties of the token

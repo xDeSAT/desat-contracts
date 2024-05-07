@@ -18,10 +18,7 @@ contract ExampleImplementation is PhysicalAssetRedemption {
      * @param name The name of the token
      * @param symbol The symbol of the token
      */
-    constructor(
-        string memory name,
-        string memory symbol
-    ) PhysicalAssetRedemption(name, symbol) {
+    constructor(string memory name, string memory symbol) PhysicalAssetRedemption(name, symbol) {
         // counter should start from 1
         _tokenIdCounter.increment();
     }
