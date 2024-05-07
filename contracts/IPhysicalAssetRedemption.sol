@@ -35,14 +35,16 @@ struct Amount {
 interface IPhysicalAssetRedemption {
     /**
      * @notice Emitted when properties are set
+     * @param tokenId The ID of the token
      * @param properties The properties of the token
      */
-    event PropertiesSet(Properties properties);
+    event PropertiesSet(uint256 indexed tokenId, Properties properties);
     /**
      * @notice Emitted when properties are removed
+     * @param tokenId The ID of the token
      * @param properties The properties of the token
      */
-    event PropertiesRemoved(Properties properties);
+    event PropertiesRemoved(uint256 indexed tokenId, Properties properties);
 
     /**
      * @notice Retrieves all the properties of a token

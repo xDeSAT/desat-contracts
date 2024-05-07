@@ -42,7 +42,7 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
             declaredValue: Amount({ currency: declaredValueCurrency, value: declaredValueAmount })
         });
 
-        emit PropertiesSet(_properties[tokenId]);
+        emit PropertiesSet(tokenId, _properties[tokenId]);
     }
 
     /**
@@ -58,7 +58,7 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
      */
     function _removeProperties(uint256 tokenId) internal {
         delete _properties[tokenId];
-        emit PropertiesRemoved(_properties[tokenId]);
+        emit PropertiesRemoved(tokenId, _properties[tokenId]);
     }
 
     /**
