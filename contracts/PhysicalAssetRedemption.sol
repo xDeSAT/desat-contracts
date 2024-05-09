@@ -11,13 +11,21 @@ import { IPhysicalAssetRedemption, Properties, Amount } from "./interfaces/IPhys
  **/
 contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
     /**
+     * @dev Thrown when the properties of a token are not initialized
+     */
+    error PropertiesUninitialized();
+
+    /**
+     * @notice Token properties based on the token ID
+     */
+    mapping(uint256 tokenId => Properties) private _properties;
+
+    /**
      * @notice Constructor for the PhysicalAssetRedemption contract
      * @param _name The name of the token
      * @param _symbol The symbol of the token
      */
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
-
-    mapping(uint256 tokenId => Properties) private _properties;
 
     /**
      * @inheritdoc IPhysicalAssetRedemption
@@ -63,7 +71,7 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
         if (to == address(0)) {
             _removeProperties(tokenId);
         } else if (from == address(0)) {
-            require(bytes(_properties[tokenId].tokenIssuer).length != 0, "Properties not initialized");
+            if (bytes(_properties[tokenId].tokenIssuer).length == 0) revert PropertiesUninitialized();
         }
 
         return super._update(to, tokenId, auth);

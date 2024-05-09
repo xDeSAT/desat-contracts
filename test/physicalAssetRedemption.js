@@ -112,7 +112,7 @@ describe("Example Implementation Contract", function () {
         });
 
         it("should fail without properties", async () => {
-            await expect(tokenContract.mintToken(2, addr1.address)).to.be.revertedWith("Properties not initialized"); // tokenId 2 doesn't exist
+            await expect(tokenContract.mintToken(2, addr1.address)).to.be.revertedWith(`PropertiesUninitialized()`); // tokenId 2 doesn't exist
         });
     });
 
