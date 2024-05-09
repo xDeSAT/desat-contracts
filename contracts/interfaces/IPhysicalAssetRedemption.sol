@@ -3,16 +3,14 @@ pragma solidity ^0.8.21;
 
 /**
  * @notice A struct containing data for redemption properties
- * @param tokenId Set when properties are created
  * @param tokenIssuer The network or entity minting the tokens
- * @param legalOwner The legal owner of the physical asset
+ * @param assetHolder The legal owner of the physical asset
  * @param storedLocation The physical storage location
  * @param terms  Link to IPFS contract, agreement or terms
  * @param jurisdiction The legal justification set out in the terms
  * @param declaredValue The declared value at time of token minting
  */
 struct Properties {
-    uint256 tokenId;
     string tokenIssuer;
     string assetHolder;
     string storedLocation;
@@ -35,40 +33,28 @@ struct Amount {
  * @notice Interface for the PhysicalAssetRedemption contract
  */
 interface IPhysicalAssetRedemption {
-
     /**
      * @notice Emitted when properties are set
+     * @param tokenId The ID of the token
      * @param properties The properties of the token
      */
-    event PropertiesSet(Properties properties);
+    event PropertiesSet(uint256 indexed tokenId, Properties properties);
     /**
      * @notice Emitted when properties are removed
+     * @param tokenId The ID of the token
      * @param properties The properties of the token
      */
-    event PropertiesRemoved(Properties properties);
+    event PropertiesRemoved(uint256 indexed tokenId, Properties properties);
 
     /**
-     * @notice function to get the properties of a token
-     * @param tokenId The token id of the minted token
+     * @notice Retrieves all the properties of a token
+     * @param tokenId The token ID of the minted token
      */
-    function properties(
-        uint256 id
-    )
-        external
-        view
-        returns (
-            uint256 tokenId,
-            string memory tokenIssuer,
-            string memory assetHolder,
-            string memory storedLocation,
-            string memory terms,
-            string memory jurisdiction,
-            Amount memory declaredValue
-        );
+    function getProperties(uint256 tokenId) external view returns (Properties memory properties);
 
     /**
      * @notice Properties required to be set when minting a token
-     * @param id The token id of the minted token
+     * @param tokenId The token ID of the minted token
      * @param tokenIssuer The network or entity minting the tokens
      * @param assetHolder The legal owner of the physical asset
      * @param storedLocation The physical storage location
@@ -78,7 +64,7 @@ interface IPhysicalAssetRedemption {
      * @param declaredValueAmount The declared value amount at time of token minting
      */
     function setProperties(
-        uint256 id,
+        uint256 tokenId,
         string memory tokenIssuer,
         string memory assetHolder,
         string memory storedLocation,
