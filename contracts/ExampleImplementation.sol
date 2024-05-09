@@ -17,12 +17,12 @@ contract ExampleImplementation is PhysicalAssetRedemption {
      * @param symbol The symbol of the token
      */
     constructor(string memory name, string memory symbol) PhysicalAssetRedemption(name, symbol) {
-        // counter should start from 1
         _tokenId = 1;
     }
 
     /**
-     * @notice Properties require initialization before minting a token
+     * @notice Initializes the properties of the next token
+     * @dev Properties require to be initialized before minting a token
      * @param properties The properties of the token
      */
     function initializeProperties(Properties calldata properties) public {
@@ -34,17 +34,17 @@ contract ExampleImplementation is PhysicalAssetRedemption {
     }
 
     /**
-     * @notice Public mint function. Requires tokenId from initializePropeties
+     * @notice Public mint function
      * @param to The address to mint the token to
-     * @param tokenId The token id of the initilized token
+     * @param tokenId The token ID of the initialized token
      */
     function mintToken(uint256 tokenId, address to) public {
         _safeMint(to, tokenId);
     }
 
     /**
-     * @notice Public burn function. Requires tokenId from initializePropeties
-     * @param tokenId The token id of the minted token
+     * @notice Public burn function
+     * @param tokenId The token ID of the minted token
      */
     function burnToken(uint256 tokenId) public {
         _burn(tokenId);

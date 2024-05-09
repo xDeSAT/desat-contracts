@@ -46,7 +46,7 @@ contract PhysicalAssetRedemptionV4 is IPhysicalAssetRedemption, ERC721 {
     }
 
     /**
-     * @notice internal function to remove the properties of a token
+     * @notice Internal function to remove the properties of a token
      * @param tokenId The token id of the minted token
      */
     function _removeProperties(uint256 tokenId) internal {
@@ -55,7 +55,7 @@ contract PhysicalAssetRedemptionV4 is IPhysicalAssetRedemption, ERC721 {
     }
 
     /**
-     * @notice override of the _safeMint function to check if properties are set
+     * @notice Override of the {_safeMint} function to check if properties are set
      * @param to The address to mint the token to
      * @param tokenId The token id of the token to mint
      */
@@ -65,7 +65,7 @@ contract PhysicalAssetRedemptionV4 is IPhysicalAssetRedemption, ERC721 {
     }
 
     /**
-     * @notice override of the _burn function to remove properties
+     * @notice Override of the {_burn} function to remove properties
      * @param tokenId The token id of the minted token
      */
     function _burn(uint256 tokenId) internal virtual override {

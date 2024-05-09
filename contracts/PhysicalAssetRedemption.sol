@@ -46,8 +46,8 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
     }
 
     /**
-     * @notice internal function to remove the properties of a token
-     * @param tokenId The token id of the minted token
+     * @notice Internal function to remove the properties of a token
+     * @param tokenId The token ID of the minted token
      */
     function _removeProperties(uint256 tokenId) internal {
         delete _properties[tokenId];
@@ -55,8 +55,8 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
     }
 
     /**
-     * @notice override of the _burn function to remove properties
-     * @param tokenId The token id of the minted token
+     * @notice Override of the {_update} function to remove the properties of a token or check if they are set before minting
+     * @param tokenId The token ID of the minted or burned token
      */
     function _update(address to, uint256 tokenId, address auth) internal override returns (address) {
         address from = _ownerOf(tokenId);
