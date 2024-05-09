@@ -1,15 +1,15 @@
 //SPDX-License-Identifier: UNLICENCED
 pragma solidity ^0.8.21;
 
-import { ERC721 } from "@openzeppelin/contracts-v5/token/ERC721/ERC721.sol";
-import { IPhysicalAssetRedemption, Properties, Amount } from "./interfaces/IPhysicalAssetRedemption.sol";
+import { ERC721 } from "@openzeppelin/contracts-v4/token/ERC721/ERC721.sol";
+import { IPhysicalAssetRedemption, Properties, Amount } from "../interfaces/IPhysicalAssetRedemption.sol";
 
 /**
  * @title Physical Asset Redemption Contract
  * @author DeSAT
- * @notice Contract for Physical Asset Redemption Standard
+ * @notice Contract for Physical Asset Redemption Standard compatible with OpenZeppelin v4 library
  **/
-contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
+contract PhysicalAssetRedemptionV4 is IPhysicalAssetRedemption, ERC721 {
     /**
      * @notice Constructor for the PhysicalAssetRedemption contract
      * @param _name The name of the token
@@ -55,17 +55,21 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
     }
 
     /**
+     * @notice override of the _safeMint function to check if properties are set
+     * @param to The address to mint the token to
+     * @param tokenId The token id of the token to mint
+     */
+    function _safeMint(address to, uint256 tokenId) internal virtual override {
+        require(bytes(_properties[tokenId].tokenIssuer).length != 0, "Properties not initialized");
+        super._safeMint(to, tokenId);
+    }
+
+    /**
      * @notice override of the _burn function to remove properties
      * @param tokenId The token id of the minted token
      */
-    function _update(address to, uint256 tokenId, address auth) internal override returns (address) {
-        address from = _ownerOf(tokenId);
-        if (to == address(0)) {
-            _removeProperties(tokenId);
-        } else if (from == address(0)) {
-            require(bytes(_properties[tokenId].tokenIssuer).length != 0, "Properties not initialized");
-        }
-
-        return super._update(to, tokenId, auth);
+    function _burn(uint256 tokenId) internal virtual override {
+        _removeProperties(tokenId);
+        super._burn(tokenId);
     }
 }
