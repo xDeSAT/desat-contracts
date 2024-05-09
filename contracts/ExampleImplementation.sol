@@ -2,16 +2,14 @@
 pragma solidity ^0.8.21;
 
 import "./PhysicalAssetRedemption.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
 /**
- * @title Examplpe Implementation Contract
+ * @title Example Implementation Contract
  * @author DeSAT
  * @notice Example Contract for using Physical Asset Redemption Standard
  **/
 contract ExampleImplementation is PhysicalAssetRedemption {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIdCounter;
+    uint256 private _tokenId;
 
     /**
      * @notice Constructor for the ExampleImplementation contract
@@ -20,7 +18,7 @@ contract ExampleImplementation is PhysicalAssetRedemption {
      */
     constructor(string memory name, string memory symbol) PhysicalAssetRedemption(name, symbol) {
         // counter should start from 1
-        _tokenIdCounter.increment();
+        _tokenId = 1;
     }
 
     /**
@@ -42,10 +40,8 @@ contract ExampleImplementation is PhysicalAssetRedemption {
         string memory declaredValueCurrency,
         uint256 declaredValueAmount
     ) public {
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
         setProperties(
-            tokenId,
+            _tokenId,
             tokenIssuer,
             assetHolder,
             storedLocation,
@@ -54,6 +50,10 @@ contract ExampleImplementation is PhysicalAssetRedemption {
             declaredValueCurrency,
             declaredValueAmount
         );
+
+        unchecked {
+            ++_tokenId;
+        }
     }
 
     /**

@@ -23,7 +23,6 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
      * @inheritdoc IPhysicalAssetRedemption
      */
     function setProperties(uint256 tokenId, Properties calldata properties) public {
-        require(tokenId > 0, "Token id must be greater than 0");
         _properties[tokenId] = Properties({
             tokenIssuer: properties.tokenIssuer,
             assetHolder: properties.assetHolder,
