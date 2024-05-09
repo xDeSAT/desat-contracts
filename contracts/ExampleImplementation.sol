@@ -57,7 +57,7 @@ contract ExampleImplementation is PhysicalAssetRedemption {
     }
 
     /**
-     * @notice Public mint function. Requires tokenid from initializePropeties
+     * @notice Public mint function. Requires tokenId from initializePropeties
      * @param to The address to mint the token to
      * @param tokenId The token id of the initilized token
      */
@@ -66,7 +66,7 @@ contract ExampleImplementation is PhysicalAssetRedemption {
     }
 
     /**
-     * @notice Public burn function. Requires tokenid from initializePropeties
+     * @notice Public burn function. Requires tokenId from initializePropeties
      * @param tokenId The token id of the minted token
      */
     function burnToken(uint256 tokenId) public {

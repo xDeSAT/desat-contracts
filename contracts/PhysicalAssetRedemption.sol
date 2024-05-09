@@ -22,24 +22,18 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
     /**
      * @inheritdoc IPhysicalAssetRedemption
      */
-    function setProperties(
-        uint256 tokenId,
-        string memory tokenIssuer,
-        string memory assetHolder,
-        string memory storedLocation,
-        string memory terms,
-        string memory jurisdiction,
-        string memory declaredValueCurrency,
-        uint256 declaredValueAmount
-    ) public {
+    function setProperties(uint256 tokenId, Properties calldata properties) public {
         require(tokenId > 0, "Token id must be greater than 0");
         _properties[tokenId] = Properties({
-            tokenIssuer: tokenIssuer,
-            assetHolder: assetHolder,
-            storedLocation: storedLocation,
-            terms: terms,
-            jurisdiction: jurisdiction,
-            declaredValue: Amount({ currency: declaredValueCurrency, value: declaredValueAmount })
+            tokenIssuer: properties.tokenIssuer,
+            assetHolder: properties.assetHolder,
+            storedLocation: properties.storedLocation,
+            terms: properties.terms,
+            jurisdiction: properties.jurisdiction,
+            declaredValue: Amount({
+                currency: properties.declaredValue.currency,
+                value: properties.declaredValue.value
+            })
         });
 
         emit PropertiesSet(tokenId, _properties[tokenId]);
