@@ -23,33 +23,10 @@ contract ExampleImplementation is PhysicalAssetRedemption {
 
     /**
      * @notice Properties require initialization before minting a token
-     * @param tokenIssuer The network or entity minting the tokens
-     * @param assetHolder The legal owner of the physical asset
-     * @param storedLocation The physical storage location
-     * @param terms Link to IPFS contract, agreement or terms
-     * @param jurisdiction The legal justification set out in the terms
-     * @param declaredValueCurrency The declared value currency at time of token miniting
-     * @param declaredValueAmount The declared value amount at time of token miniting
+     * @param properties The properties of the token
      */
-    function initializeProperties(
-        string memory tokenIssuer,
-        string memory assetHolder,
-        string memory storedLocation,
-        string memory terms,
-        string memory jurisdiction,
-        string memory declaredValueCurrency,
-        uint256 declaredValueAmount
-    ) public {
-        setProperties(
-            _tokenId,
-            tokenIssuer,
-            assetHolder,
-            storedLocation,
-            terms,
-            jurisdiction,
-            declaredValueCurrency,
-            declaredValueAmount
-        );
+    function initializeProperties(Properties calldata properties) public {
+        setProperties({ tokenId: _tokenId, properties: properties });
 
         unchecked {
             ++_tokenId;
