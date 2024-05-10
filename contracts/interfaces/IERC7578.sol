@@ -30,9 +30,9 @@ struct Amount {
 }
 
 /**
- * @notice Interface for the PhysicalAssetRedemption contract
+ * @notice Required interface of an ERC-7578 compliant contract
  */
-interface IPhysicalAssetRedemption {
+interface IERC7578 {
     /**
      * @notice Emitted when properties are set
      * @param tokenId The ID of the token
