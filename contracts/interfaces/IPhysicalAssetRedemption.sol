@@ -6,7 +6,7 @@ pragma solidity ^0.8.21;
  * @param tokenIssuer The network or entity minting the tokens
  * @param assetHolder The legal owner of the physical asset
  * @param storedLocation The physical storage location
- * @param terms  Link to IPFS contract, agreement or terms
+ * @param terms Link to IPFS contract, agreement or terms
  * @param jurisdiction The legal justification set out in the terms
  * @param declaredValue The declared value at time of token minting
  */
@@ -39,6 +39,7 @@ interface IPhysicalAssetRedemption {
      * @param properties The properties of the token
      */
     event PropertiesSet(uint256 indexed tokenId, Properties properties);
+
     /**
      * @notice Emitted when properties are removed
      * @param tokenId The ID of the token
@@ -55,22 +56,7 @@ interface IPhysicalAssetRedemption {
     /**
      * @notice Properties required to be set when minting a token
      * @param tokenId The token ID of the minted token
-     * @param tokenIssuer The network or entity minting the tokens
-     * @param assetHolder The legal owner of the physical asset
-     * @param storedLocation The physical storage location
-     * @param terms Link to IPFS contract, agreement or terms
-     * @param jurisdiction The legal justification set out in the terms
-     * @param declaredValueCurrency The declared value currency at time of token minting
-     * @param declaredValueAmount The declared value amount at time of token minting
+     * @param properties The properties of the token
      */
-    function setProperties(
-        uint256 tokenId,
-        string memory tokenIssuer,
-        string memory assetHolder,
-        string memory storedLocation,
-        string memory terms,
-        string memory jurisdiction,
-        string memory declaredValueCurrency,
-        uint256 declaredValueAmount
-    ) external;
+    function setProperties(uint256 tokenId, Properties calldata properties) external;
 }

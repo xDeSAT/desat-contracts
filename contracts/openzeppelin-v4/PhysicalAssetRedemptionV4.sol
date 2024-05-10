@@ -1,31 +1,23 @@
 //SPDX-License-Identifier: UNLICENCED
 pragma solidity ^0.8.21;
 
-import { ERC721 } from "@openzeppelin/contracts-v5/token/ERC721/ERC721.sol";
-import { IPhysicalAssetRedemption, Properties, Amount } from "./interfaces/IPhysicalAssetRedemption.sol";
+import { ERC721 } from "@openzeppelin/contracts-v4/token/ERC721/ERC721.sol";
+import { IPhysicalAssetRedemption, Properties, Amount } from "../interfaces/IPhysicalAssetRedemption.sol";
 
 /**
  * @title Physical Asset Redemption Contract
  * @author DeSAT
- * @notice Contract for Physical Asset Redemption Standard
+ * @notice Contract for Physical Asset Redemption Standard compatible with OpenZeppelin v4 library
  **/
-contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
-    /**
-     * @dev Thrown when the properties of a token are not initialized
-     */
-    error PropertiesUninitialized();
-
-    /**
-     * @notice Token properties based on the token ID
-     */
-    mapping(uint256 tokenId => Properties) private _properties;
-
+contract PhysicalAssetRedemptionV4 is IPhysicalAssetRedemption, ERC721 {
     /**
      * @notice Constructor for the PhysicalAssetRedemption contract
      * @param _name The name of the token
      * @param _symbol The symbol of the token
      */
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
+
+    mapping(uint256 tokenId => Properties) private _properties;
 
     /**
      * @inheritdoc IPhysicalAssetRedemption
@@ -55,7 +47,7 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
 
     /**
      * @notice Internal function to remove the properties of a token
-     * @param tokenId The token ID of the minted token
+     * @param tokenId The token id of the minted token
      */
     function _removeProperties(uint256 tokenId) internal {
         delete _properties[tokenId];
@@ -63,17 +55,21 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
     }
 
     /**
-     * @notice Override of the {_update} function to remove the properties of a token or check if they are set before minting
-     * @param tokenId The token ID of the minted or burned token
+     * @notice Override of the {_safeMint} function to check if properties are set
+     * @param to The address to mint the token to
+     * @param tokenId The token id of the token to mint
      */
-    function _update(address to, uint256 tokenId, address auth) internal override returns (address) {
-        address from = _ownerOf(tokenId);
-        if (to == address(0)) {
-            _removeProperties(tokenId);
-        } else if (from == address(0)) {
-            if (bytes(_properties[tokenId].tokenIssuer).length == 0) revert PropertiesUninitialized();
-        }
+    function _safeMint(address to, uint256 tokenId) internal virtual override {
+        require(bytes(_properties[tokenId].tokenIssuer).length != 0, "Properties not initialized");
+        super._safeMint(to, tokenId);
+    }
 
-        return super._update(to, tokenId, auth);
+    /**
+     * @notice Override of the {_burn} function to remove properties
+     * @param tokenId The token id of the minted token
+     */
+    function _burn(uint256 tokenId) internal virtual override {
+        _removeProperties(tokenId);
+        super._burn(tokenId);
     }
 }

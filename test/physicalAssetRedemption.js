@@ -12,8 +12,10 @@ const exampleToken1 = {
     storedLocation: "SALISBURY UK",
     terms: "HTTTPS://DESAT.NETWORK/ASSET/1/TERMS",
     jurisdiction: "UNITED KINGDOM",
-    declaredValueCurrency: "GBP",
-    declaredValueAmount: 100,
+    declaredValue: {
+        currency: "GBP",
+        value: 100,
+    },
 };
 
 describe("Example Implementation Contract", function () {
@@ -48,15 +50,7 @@ describe("Example Implementation Contract", function () {
             ({ tokenContract, owner, addr1, addr2 } = await loadFixture(deployTokenFixture));
 
             // 1. initialize properties
-            const tx = await tokenContract.initializeProperties(
-                exampleToken1.tokenIssuer,
-                exampleToken1.assetHolder,
-                exampleToken1.storedLocation,
-                exampleToken1.terms,
-                exampleToken1.jurisdiction,
-                exampleToken1.declaredValueCurrency,
-                exampleToken1.declaredValueAmount,
-            );
+            const tx = await tokenContract.initializeProperties({ ...exampleToken1 });
 
             result = await tx.wait();
         });
@@ -73,8 +67,8 @@ describe("Example Implementation Contract", function () {
             expect(event.args.properties.storedLocation).to.equal(exampleToken1.storedLocation);
             expect(event.args.properties.terms).to.equal(exampleToken1.terms);
             expect(event.args.properties.jurisdiction).to.equal(exampleToken1.jurisdiction);
-            expect(event.args.properties.declaredValue.currency).to.equal(exampleToken1.declaredValueCurrency);
-            expect(event.args.properties.declaredValue.value).to.equal(exampleToken1.declaredValueAmount);
+            expect(event.args.properties.declaredValue.currency).to.equal(exampleToken1.declaredValue.currency);
+            expect(event.args.properties.declaredValue.value).to.equal(exampleToken1.declaredValue.value);
         });
 
         it("should store properties", async () => {
@@ -86,8 +80,8 @@ describe("Example Implementation Contract", function () {
             expect(result.storedLocation).to.equal(exampleToken1.storedLocation);
             expect(result.terms).to.equal(exampleToken1.terms);
             expect(result.jurisdiction).to.equal(exampleToken1.jurisdiction);
-            expect(result.declaredValue.currency).to.equal(exampleToken1.declaredValueCurrency);
-            expect(result.declaredValue.value).to.equal(exampleToken1.declaredValueAmount);
+            expect(result.declaredValue.currency).to.equal(exampleToken1.declaredValue.currency);
+            expect(result.declaredValue.value).to.equal(exampleToken1.declaredValue.value);
         });
     });
 
@@ -99,15 +93,7 @@ describe("Example Implementation Contract", function () {
             ({ tokenContract, owner, addr1, addr2 } = await loadFixture(deployTokenFixture));
 
             // 1. initialize properties
-            const tx = await tokenContract.initializeProperties(
-                exampleToken1.tokenIssuer,
-                exampleToken1.assetHolder,
-                exampleToken1.storedLocation,
-                exampleToken1.terms,
-                exampleToken1.jurisdiction,
-                exampleToken1.declaredValueCurrency,
-                exampleToken1.declaredValueAmount,
-            );
+            const tx = await tokenContract.initializeProperties({ ...exampleToken1 });
 
             result = await tx.wait();
         });
@@ -126,7 +112,7 @@ describe("Example Implementation Contract", function () {
         });
 
         it("should fail without properties", async () => {
-            await expect(tokenContract.mintToken(2, addr1.address)).to.be.revertedWith("Properties not initialized"); // tokenId 2 doesn't exist
+            await expect(tokenContract.mintToken(2, addr1.address)).to.be.revertedWith(`PropertiesUninitialized()`); // tokenId 2 doesn't exist
         });
     });
 
@@ -137,15 +123,7 @@ describe("Example Implementation Contract", function () {
             ({ tokenContract, owner, addr1, addr2 } = await loadFixture(deployTokenFixture));
 
             // 1. initialize properties
-            await tokenContract.initializeProperties(
-                exampleToken1.tokenIssuer,
-                exampleToken1.assetHolder,
-                exampleToken1.storedLocation,
-                exampleToken1.terms,
-                exampleToken1.jurisdiction,
-                exampleToken1.declaredValueCurrency,
-                exampleToken1.declaredValueAmount,
-            );
+            await tokenContract.initializeProperties({ ...exampleToken1 });
 
             // 2. mint token
             await tokenContract.mintToken(1, addr1.address);
@@ -180,7 +158,7 @@ describe("Example Implementation Contract", function () {
         });
 
         it("should fail without to burn non existing token", async () => {
-            await expect(tokenContract.burnToken(2)).to.be.revertedWith("ERC721: invalid token ID"); // tokenId 2 doesn't exist
+            await expect(tokenContract.burnToken(2)).to.be.revertedWith(`ERC721NonexistentToken`, 2); // tokenId 2 doesn't exist
         });
     });
 });
