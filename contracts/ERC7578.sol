@@ -2,14 +2,14 @@
 pragma solidity ^0.8.21;
 
 import { ERC721 } from "@openzeppelin/contracts-v5/token/ERC721/ERC721.sol";
-import { IPhysicalAssetRedemption, Properties, Amount } from "./interfaces/IPhysicalAssetRedemption.sol";
+import { IERC7578, Properties, Amount } from "./interfaces/IERC7578.sol";
 
 /**
  * @title Physical Asset Redemption Contract
  * @author DeSAT
  * @notice Contract for Physical Asset Redemption Standard
  **/
-contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
+contract ERC7578 is IERC7578, ERC721 {
     /**
      * @dev Thrown when the properties of a token are not initialized
      */
@@ -28,7 +28,7 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
 
     /**
-     * @inheritdoc IPhysicalAssetRedemption
+     * @inheritdoc IERC7578
      */
     function setProperties(uint256 tokenId, Properties calldata properties) public {
         _properties[tokenId] = Properties({
@@ -47,7 +47,7 @@ contract PhysicalAssetRedemption is IPhysicalAssetRedemption, ERC721 {
     }
 
     /**
-     * @inheritdoc IPhysicalAssetRedemption
+     * @inheritdoc IERC7578
      */
     function getProperties(uint256 tokenId) public view override returns (Properties memory properties) {
         properties = _properties[tokenId];
