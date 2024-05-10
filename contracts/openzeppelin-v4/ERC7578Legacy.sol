@@ -11,14 +11,19 @@ import { IERC7578, Properties, Amount } from "../interfaces/IERC7578.sol";
  **/
 contract ERC7578Legacy is IERC7578, ERC721 {
     /**
+     * @notice Thrown when the properties of a token are not initialized
+     */
+    error PropertiesUninitialized();
+
+    /**
+     * @notice Retrieves the properties of the `tokenId` token
+     */
+    mapping(uint256 tokenId => Properties) private _properties;
+
+    /**
      * @notice Initializes the ERC721 dependency contract by setting a `name` and a `symbol` to the token collection
      */
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
-
-    /**
-     * @notice Token properties based on the ID of the token
-     */
-    mapping(uint256 tokenId => Properties) private _properties;
 
     /**
      * @inheritdoc IERC7578
@@ -61,7 +66,7 @@ contract ERC7578Legacy is IERC7578, ERC721 {
      * @param tokenId The ID of the token to mint
      */
     function _safeMint(address to, uint256 tokenId) internal virtual override {
-        require(bytes(_properties[tokenId].tokenIssuer).length != 0, "Properties not initialized");
+        if (bytes(_properties[tokenId].tokenIssuer).length == 0) revert PropertiesUninitialized();
         super._safeMint(to, tokenId);
     }
 

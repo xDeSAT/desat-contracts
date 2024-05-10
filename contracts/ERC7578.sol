@@ -16,7 +16,7 @@ contract ERC7578 is IERC7578, ERC721 {
     error PropertiesUninitialized();
 
     /**
-     * @notice Token properties based on the ID of the token
+     * @notice Retrieves the properties of the `tokenId` token
      */
     mapping(uint256 tokenId => Properties) private _properties;
 
