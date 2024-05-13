@@ -1,14 +1,14 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.21;
 
-import "./PhysicalAssetRedemption.sol";
+import "./ERC7578.sol";
 
 /**
  * @title Example Implementation Contract
  * @author DeSAT
  * @notice Example Contract for using Physical Asset Redemption Standard
  **/
-contract ExampleImplementation is PhysicalAssetRedemption {
+contract ExampleImplementation is ERC7578 {
     uint256 private _tokenId;
 
     /**
@@ -16,7 +16,7 @@ contract ExampleImplementation is PhysicalAssetRedemption {
      * @param name The name of the token
      * @param symbol The symbol of the token
      */
-    constructor(string memory name, string memory symbol) PhysicalAssetRedemption(name, symbol) {
+    constructor(string memory name, string memory symbol) ERC7578(name, symbol) {
         _tokenId = 1;
     }
 
