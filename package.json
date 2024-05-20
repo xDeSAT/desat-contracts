@@ -12,9 +12,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:xDeSAT/Physical-Asset-Redemption-Standard.git"
+    "url": "ssh://git@github.com:xDeSAT/physical-asset-redemption.git"
   },
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.1.1",
