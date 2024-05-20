@@ -49,8 +49,8 @@ describe("Example Implementation Contract", function () {
         beforeEach(async function () {
             ({ tokenContract, owner, addr1, addr2 } = await loadFixture(deployTokenFixture));
 
-            // 1. initialize properties
-            const tx = await tokenContract.initializeProperties({ ...exampleToken1 });
+            // Test properties initialization by minting a new token
+            const tx = await tokenContract.mintToken(addr1.address, { ...exampleToken1 });
 
             result = await tx.wait();
         });
@@ -91,28 +91,20 @@ describe("Example Implementation Contract", function () {
 
         beforeEach(async function () {
             ({ tokenContract, owner, addr1, addr2 } = await loadFixture(deployTokenFixture));
-
-            // 1. initialize properties
-            const tx = await tokenContract.initializeProperties({ ...exampleToken1 });
-
-            result = await tx.wait();
         });
 
         // properties are needed for minting
         it("should mint new token", async () => {
-            const tx = await tokenContract.mintToken(1, addr1.address); // 1 is the tokenId from initializeProperties
+            const tx = await tokenContract.mintToken(addr1.address, { ...exampleToken1 });
 
             const mintResult = await tx.wait();
-            const event = mintResult.events[0];
+            const mintEvent = mintResult.events[1];
 
-            expect(event.event).to.equal("Transfer");
-            //expect(event.args.tokenId).to.equal(1); // tokenId should be 1
-            expect(event.args.from).to.equal(zeroAddress); // mints from zero address
-            expect(event.args.to).to.equal(addr1.address); // mints to addr1
-        });
-
-        it("should fail without properties", async () => {
-            await expect(tokenContract.mintToken(2, addr1.address)).to.be.revertedWith(`PropertiesUninitialized()`); // tokenId 2 doesn't exist
+            expect(mintResult.events[0].event).to.equal("PropertiesSet");
+            expect(mintResult.events[1].event).to.equal("Transfer");
+            expect(mintEvent.args.tokenId).to.equal(1); // tokenId should be 1
+            expect(mintEvent.args.from).to.equal(zeroAddress); // mints from zero address
+            expect(mintEvent.args.to).to.equal(addr1.address); // mints to addr1
         });
     });
 
@@ -122,11 +114,7 @@ describe("Example Implementation Contract", function () {
         beforeEach(async function () {
             ({ tokenContract, owner, addr1, addr2 } = await loadFixture(deployTokenFixture));
 
-            // 1. initialize properties
-            await tokenContract.initializeProperties({ ...exampleToken1 });
-
-            // 2. mint token
-            await tokenContract.mintToken(1, addr1.address);
+            await tokenContract.mintToken(addr1.address, { ...exampleToken1 });
         });
 
         // properties are needed for minting
