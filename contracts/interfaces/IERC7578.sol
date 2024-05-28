@@ -45,9 +45,8 @@ interface IERC7578 {
      * @notice Emitted when the properties of the `tokenId` token are removed
      *
      * @param tokenId The ID of the token
-     * @param properties The properties of the token
      */
-    event PropertiesRemoved(uint256 indexed tokenId, Properties properties);
+    event PropertiesRemoved(uint256 indexed tokenId);
 
     /**
      * @notice Retrieves all the properties of the `tokenId` token

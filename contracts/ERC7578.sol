@@ -57,7 +57,7 @@ contract ERC7578 is IERC7578, ERC721 {
      */
     function _removeProperties(uint256 tokenId) internal {
         delete _properties[tokenId];
-        emit PropertiesRemoved(tokenId, _properties[tokenId]);
+        emit PropertiesRemoved(tokenId);
     }
 
     /**
