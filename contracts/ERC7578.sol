@@ -9,7 +9,7 @@ import { IERC7578, Properties, Amount } from "./interfaces/IERC7578.sol";
  * @author DESAT
  * @notice Implementation of the ERC-7578: Physical Asset Redemption standard
  **/
-contract ERC7578 is IERC7578, ERC721 {
+contract ERC7578 is ERC721, IERC7578 {
     /**
      * @notice Thrown when the properties of a token are not initialized
      */
