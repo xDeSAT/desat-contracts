@@ -1,31 +1,30 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.21;
 
-import "./ERC7578.sol";
+import { ERC7578, Properties } from "./ERC7578.sol";
 
 /**
- * @title Example Implementation Contract
- * @author DESAT
- * @notice Example Contract for using Physical Asset Redemption Standard
+ * @notice Example implementation of the ERC-7578 Physical Asset Redemption Standard
  **/
 contract ExampleImplementation is ERC7578 {
     uint256 private _nextTokenId;
 
     /**
-     * @notice Constructor for the ExampleImplementation contract
-     * @param name The name of the token
-     * @param symbol The symbol of the token
+     * @notice Initializes the name and symbol of the ERC-721 collection and sets the next token ID to start at 1
+     * @param name The name of the collection
+     * @param symbol The symbol of the collection
      */
     constructor(string memory name, string memory symbol) ERC7578(name, symbol) {
         _nextTokenId = 1;
     }
 
     /**
-     * @notice Public mint function
+     * @notice Mints a new token to the `to` address for a physical asset with the `properties` properties
      * @param to The address to mint the token to
-     * @param tokenId The token ID of the initialized token
+     * @param properties The properties of the token
+     * @return tokenId The unique identifier of the token
      */
-    function mintToken(address to, Properties calldata properties) public returns (uint256 tokenId) {
+    function mint(address to, Properties calldata properties) public returns (uint256 tokenId) {
         // Get the next `tokenId` by initializing the ERC-7578 properties
         tokenId = _initializeProperties(properties);
 
@@ -34,10 +33,10 @@ contract ExampleImplementation is ERC7578 {
     }
 
     /**
-     * @notice Public burn function
+     * @notice Burns the `tokenId` token
      * @param tokenId The token ID of the minted token
      */
-    function burnToken(uint256 tokenId) public {
+    function burn(uint256 tokenId) public {
         _burn(tokenId);
     }
 
@@ -47,14 +46,14 @@ contract ExampleImplementation is ERC7578 {
      * - The ERC-7578 properties MUST be initialized before minting the token
      *
      * @param properties The ERC-7578 properties of the token
-     * @return tokenId The next ID of the token to be minted
+     * @return tokenId The unique identifier of the token
      */
     function _initializeProperties(Properties calldata properties) internal returns (uint256 tokenId) {
         // Get the next token ID
         tokenId = _nextTokenId;
 
         // Effects: set the ERC-7578 properties of the `tokenId` token
-        setProperties(tokenId, properties);
+        _setProperties(tokenId, properties);
 
         // Increment using the unchecked mode since `_nextTokenId` will never overflow in a realistic scenario
         unchecked {
