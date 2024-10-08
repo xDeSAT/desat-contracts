@@ -14,7 +14,7 @@
     "type": "git",
     "url": "ssh://git@github.com:xDeSAT/desat-contracts.git"
   },
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.1.1",
