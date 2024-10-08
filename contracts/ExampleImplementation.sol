@@ -53,7 +53,7 @@ contract ExampleImplementation is ERC7578 {
         tokenId = _nextTokenId;
 
         // Effects: set the ERC-7578 properties of the `tokenId` token
-        _setProperties(tokenId, properties);
+        _setPropertiesOf(tokenId, properties);
 
         // Increment using the unchecked mode since `_nextTokenId` will never overflow in a realistic scenario
         unchecked {

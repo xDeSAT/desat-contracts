@@ -28,7 +28,7 @@ contract ERC7578 is ERC721, IERC7578 {
     /**
      * @inheritdoc IERC7578
      */
-    function getProperties(uint256 tokenId) public view override returns (Properties memory properties) {
+    function getPropertiesOf(uint256 tokenId) public view override returns (Properties memory properties) {
         properties = _properties[tokenId];
     }
 
@@ -42,7 +42,7 @@ contract ERC7578 is ERC721, IERC7578 {
      *
      * Emits a {PropertiesSet} event
      */
-    function _setProperties(uint256 tokenId, Properties calldata properties) internal {
+    function _setPropertiesOf(uint256 tokenId, Properties calldata properties) internal {
         _properties[tokenId] = Properties({
             tokenIssuer: properties.tokenIssuer,
             assetHolder: properties.assetHolder,
@@ -64,7 +64,7 @@ contract ERC7578 is ERC721, IERC7578 {
      *
      * Emits a {PropertiesRemoved} event
      */
-    function _removeProperties(uint256 tokenId) internal {
+    function _removePropertiesOf(uint256 tokenId) internal {
         delete _properties[tokenId];
         emit PropertiesRemoved(tokenId);
     }
@@ -77,7 +77,7 @@ contract ERC7578 is ERC721, IERC7578 {
     function _update(address to, uint256 tokenId, address auth) internal virtual override returns (address) {
         address from = _ownerOf(tokenId);
         if (to == address(0)) {
-            _removeProperties(tokenId);
+            _removePropertiesOf(tokenId);
         } else if (from == address(0)) {
             if (bytes(_properties[tokenId].tokenIssuer).length == 0) revert PropertiesUninitialized();
         }
