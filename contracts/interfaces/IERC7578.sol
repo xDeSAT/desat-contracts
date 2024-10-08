@@ -51,5 +51,5 @@ interface IERC7578 {
      * @dev Does NOT revert if token doesn't exist
      * @param tokenId The token ID of the minted token
      */
-    function getProperties(uint256 tokenId) external view returns (Properties memory properties);
+    function getPropertiesOf(uint256 tokenId) external view returns (Properties memory properties);
 }

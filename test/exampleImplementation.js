@@ -74,7 +74,7 @@ describe("Example Implementation Contract", function () {
 
         it("should store properties", async () => {
             // getter function for properties
-            const result = await impl.getProperties(1);
+            const result = await impl.getPropertiesOf(1);
 
             expect(result.tokenIssuer).to.equal(mockProperties.tokenIssuer);
             expect(result.assetHolder).to.equal(mockProperties.assetHolder);
@@ -134,7 +134,7 @@ describe("Example Implementation Contract", function () {
             expect(event1.args.to).to.equal(ethers.constants.AddressZero);
 
             // properties should be cleared
-            const result = await impl.getProperties(1);
+            const result = await impl.getPropertiesOf(1);
             expect(result.tokenIssuer).to.equal("");
             expect(result.assetHolder).to.equal("");
             expect(result.storageLocation).to.equal("");
